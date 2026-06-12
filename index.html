@@ -1,464 +1,1349 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <script src="https://kit.fontawesome.com/af9fb6522c.js" crossorigin="anonymous"></script>
-    <title>Hello, I'm Sun Ye Dam</title>
-
-    <link rel="icon" href="./img/favicon.png" type="image/x-icon">
-    <link rel="stylesheet" href="./css/common.css" type="text/css">
-    <link rel="stylesheet" href="./css/animation.css" type="text/css">
-    <style type="text/css">
-
-        span.color_main {
-            font-style: italic;
-            color: #60C5BA;
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>우리 아이 건강 지킴이</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        /* 디자인 시스템 및 메인 컬러 정의 */
+        :root {
+            --primary: #F6C65B;
+            --primary-dark: #F59E0B;
+            --bg: #FFF8E8;
+            --card-bg: #FFFFFF;
+            --text: #1F2937;
+            --success: #22C55E;
+            --emergency: #EF4444;
+            --grey: #9CA3AF;
+            --border: #F3F4F6;
         }
-        div.color_main_border {
-            border-bottom: 0.15rem solid #feee7d;
-        }
-        div.color_gradition {
-            background: linear-gradient(90deg, #ffb6f8 0%, #f9f871 100%);
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            font-family: "Pretendard Variable", Pretendard, "Noto Sans KR", sans-serif;
         }
 
-        div.wrapper {
-            max-width: 120rem; 
-            min-width: 80rem;
-            width: 100%;
-            padding: 1.5rem 1.5rem;
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #E5E7EB;
+            color: var(--text);
             display: flex;
             justify-content: center;
-            align-items: flex-start;
-            gap: 2rem;
-            box-sizing: border-box;
+            align-items: center;
+            height: 100vh;
         }
-        div.left_wrap {
+
+        /* 430px 모바일 완벽 대응 컨테이너 */
+        #app {
+            width: 100%;
+            max-width: 430px;
+            height: 100vh;
             display: flex;
             flex-direction: column;
-            gap: 2rem;
-        }
-
-        div.box_radius {
-            border-radius: 1rem;
-        }
-
-        div.box {
-            display: flex;
-            background-color: #fff;
-            box-shadow: 0 0.4rem 1rem 0 rgb(0 0 0 / 20%), 0 0.4rem 2rem 0 rgb(0 0 0 / 19%);
-            height: 47rem;
-        }
-
-        div.skill_box {
-            display: flex;
-            background-color: #fff;
-            box-shadow: 0 0.4rem 1rem 0 rgb(0 0 0 / 20%), 0 0.4rem 2rem 0 rgb(0 0 0 / 19%);
-        }
-
-        div.skill_title {
-            font-size: 1.5rem;
-            padding: 0 0 0.5rem 0.8rem;
-        }
-        div.bar_border {
-            width: 100%;
-            height: 2rem;
-            background-color: #f1f1f1;
-            border-radius: 1.6rem;
-            overflow: hidden;
-        }
-        div.bar_fill {
-            height: 2rem;
-            padding: 0 1.5rem;
-            text-align: center;
-            color: black;
-            line-height: 2rem;
-            font-weight: bolder;
-            font-size: 1.2rem;;
-        }
-
-        div.card {
-            display: flex;
+            background-color: var(--bg);
             position: relative;
-            flex-direction: column;
-            align-items: center;
-            gap: 2rem;
-            min-width: 30rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             overflow: hidden;
         }
 
-        div.card::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 1.5rem;
-            /* 원하시는 두께 1.5rem */
-            /* background: linear-gradient(90deg, rgba(60, 179, 113, 1) 0%, rgba(30, 144, 255, 1) 100%) */
-        }
-
-        div.contents_bg {
-            position: absolute;
+        /* 스마트 상단 헤더 */
+        header {
+            padding: 20px 20px 15px;
+            background-color: var(--bg);
+            position: sticky;
             top: 0;
-            width: 100%;
-            height: 14rem;
-            z-index: 0;
+            z-index: 10;
         }
 
-        div.contents_info {
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            margin-top: 1rem;
-            gap: 3rem;
-        }
-
-        div.contents_image {
-            z-index: 1;
-            margin-top: 2rem;
-            width: 17rem;
-            height: 17rem;
-            border-radius: 50%;
-            background-image: url('./img/profile.png');
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: top center;
-            border: 0.5rem solid #fff;
-            box-shadow: 0 0.4rem 1rem 0 rgb(0 0 0 / 20%), 0 0.4rem 2rem 0 rgb(0 0 0 / 19%);
-        }
-
-        div.contents_info {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        span.info_name {
-            font-family: 'Titillium Web', sans-serif;
-            font-size: 2.8rem;
-            font-weight: bold;
-        }
-
-        span.info_job,
-        span.info_local {
-            color: #4B4453;
-            font-size: 1.5rem;
-        }
-
-        div.contents_connect > a {
-            display: block;
-            border-radius: 2rem;
-            background: #F3EADA;
-            color: #4B4453;
-            font-size: 1.3rem;
-            padding: 0.6rem 3rem;
-            transition: linear .2s;
-        }
-
-        div.contents_connect>a:hover {
-            transform: scale(1.05);
-        }
-
-        div.wrap_card {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            width: 70rem;
-            min-width: 40rem;
-            gap: 2rem;
-        }
-
-        /* Introduce Box */
-        div.content_box {
-            width: 100%;
-            background-color: white;
-            box-shadow: 0 0.4rem 1rem 0 rgb(0 0 0 / 20%), 0 0.4rem 2rem 0 rgb(0 0 0 / 19%);
-        }
-
-        div.content_title {
-            font-family: 'Titillium Web', sans-serif;
-            font-weight: bold;
-            font-size: 2.2rem;
-            padding: 1.5rem 0rem;
-            margin: 0rem 2rem;
-        }
-        div.content_inner {
-            padding: 1.5rem 3rem 2rem;
-            font-size: 1.4rem;
-            color: black;
-        }
-
-        div.education_box {
-            background-color: #f1f1f1;
-            padding: 1.2rem 1rem;
-            display: flex;
-            flex-direction: column;
-            gap: .3rem;
-        }
-
-        div.education_inner {
-            display: flex;    
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        div.content_info_box {
+        .header-top {
             display: flex;
             justify-content: space-between;
+            align-items: center;
         }
 
-        span.info_bold {
-            font-weight: bold;
+        .header-title h1 {
+            font-size: 22px;
+            margin: 0;
+            font-weight: 700; /* 제목 Bold */
+            color: var(--text);
+            letter-spacing: -0.5px;
         }
-        span.color_red {
-            font-style: italic;
-            color: #DA4536;
+
+        .header-title p {
+            font-size: 12px;
+            margin: 5px 0 0;
+            color: #6B7280;
+            font-weight: 400; /* 본문 Regular */
         }
 
-        /* Responsive Web Design */
-        /* 1.Smart Phone */
-        @media (min-width: 320px) and (max-width: 768px) {
-
-            html,
-            body {
-                font-size: 80%;
-                height: 100vh;
-            }
-
-            div.wrapper {
-                max-width: none;
-                min-width: 0;
-                align-items: center;
-                justify-content: center;
-                flex-direction: column;
-            }
-
-            div.content_box {
-                display: none;
-            }
+        .header-icon {
+            width: 42px;
+            height: 42px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            box-shadow: 0 4px 10px rgba(245, 158, 11, 0.15);
         }
+
+        /* 메인 콘텐츠 영역 스크롤바 숨김 */
+        main {
+            flex: 1;
+            overflow-y: auto;
+            padding: 5px 20px 100px;
+            scroll-behavior: smooth;
+        }
+        main::-webkit-scrollbar { display: none; }
+
+        /* 페이지 전환 애니메이션 */
+        .page { display: none; }
+        .page.active {
+            display: block;
+            animation: appSlide 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @keyframes appSlide {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 고품질 카드 UI 컴포넌트 */
+        .card {
+            background: var(--card-bg);
+            border-radius: 18px;
+            padding: 18px;
+            margin-bottom: 14px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.015);
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-title i { color: var(--primary-dark); }
+
+        /* 강조 뱃지 및 핵심 문장 박스 */
+        .highlight-box {
+            background: #FFFBEB;
+            border-left: 4px solid var(--primary-dark);
+            padding: 12px;
+            border-radius: 4px 12px 12px 4px;
+            font-size: 13px;
+            line-height: 1.6;
+            margin-top: 8px;
+            font-weight: 400;
+        }
+        .highlight-box strong { color: var(--primary-dark); }
+
+        /* 최우선 순위: 활동 제한 대시보드 배너 */
+        .priority-banner {
+            background: linear-gradient(135deg, #FFF9EB 0%, #FFFFFF 100%);
+            border: 1.5px solid var(--primary);
+            position: relative;
+        }
+        .priority-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--primary-dark);
+            color: white;
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+
+        /* 건강관리 앱 스타일 신호등 구조 */
+        .status-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px;
+            border-radius: 14px;
+            margin-bottom: 10px;
+            font-size: 13px;
+        }
+        .sc-red { background: #FEF2F2; color: #991B1B; border: 1px solid #FEE2E2; }
+        .sc-yellow { background: #FFFBEB; color: #92400E; border: 1px solid #FEF3C7; }
+        .sc-green { background: #F0FDF4; color: #166534; border: 1px solid #DCFCE7; }
+
+        /* 8칸 격자형 리스트 메뉴 */
+        .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px 8px;
+            margin: 15px 0;
+        }
+        .grid-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+        .grid-icon {
+            width: 54px;
+            height: 54px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.02);
+            transition: transform 0.1s;
+        }
+        .grid-item:active .grid-icon { transform: scale(0.95); }
+        .grid-item span { font-size: 11px; font-weight: 500; color: var(--text); }
+
+        /* FAQ 아코디언 */
+        .acc-item { border-bottom: 1px solid var(--border); }
+        .acc-item:last-child { border-bottom: none; }
+        .acc-trigger {
+            padding: 15px 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        .acc-panel {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            font-size: 13px;
+            color: #4B5563;
+            line-height: 1.6;
+        }
+
+        /* 하단 고정 탭바 */
+        .bottom-tabbar {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 70px;
+            background: var(--card-bg);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-top: 1px solid var(--border);
+            padding-bottom: 10px;
+            z-index: 100;
+        }
+        .tab-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: var(--grey);
+            font-size: 10px;
+            font-weight: 500;
+            background: none;
+            border: none;
+            cursor: pointer;
+            flex: 1;
+        }
+        .tab-btn.active { color: var(--primary-dark); }
+        .tab-btn i { font-size: 18px; }
+
+        /* 인풋 폼 및 버튼 슬릭 디자인 */
+        .form-box { margin-bottom: 12px; }
+        .form-box label { display: block; font-size: 12px; font-weight: 500; margin-bottom: 5px; color: #4B5563; }
+        input, select, textarea {
+            width: 100%; padding: 11px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 13px; outline: none;
+        }
+        input:focus, select:focus, textarea:focus { border-color: var(--primary); }
+        .app-btn {
+            width: 100%; padding: 14px; background: var(--primary-dark); color: white; border: none; border-radius: 12px; font-weight: 700; font-size: 14px; cursor: pointer;
+        }
+
+        /* 응급 전용 경고 카드 */
+        .emergency-banner {
+            background: var(--emergency); color: white; padding: 18px; border-radius: 16px; margin-bottom: 14px;
+        }
+
+        /* 스마트 회복 달력 UI */
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px;
+            text-align: center;
+            margin-top: 10px;
+        }
+        .cal-header { font-size: 11px; font-weight: 700; color: var(--grey); padding: 5px 0; }
+        .cal-day {
+            background: var(--border); font-size: 11px; padding: 8px 0; border-radius: 8px; font-weight: 500; position: relative;
+        }
+        .dot-green::after { content: ''; position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; background: var(--success); border-radius: 50%; }
+        .dot-yellow::after { content: ''; position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; background: var(--primary-dark); border-radius: 50%; }
+        .dot-red::after { content: ''; position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; background: var(--emergency); border-radius: 50%; }
+
+        /* 체크리스트 */
+        .check-row { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+        .check-row:last-child { border-bottom: none; }
+        input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--primary-dark); cursor: pointer; }
+
+        /* ===== 기록/달력 탭 완성본: 복부둘레 + FLACC + 실제 달력 ===== */
+        .record-complete-card {
+            border-radius: 22px;
+            padding: 20px 18px;
+        }
+        .record-complete-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .record-complete-card label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #1F2937;
+            margin-bottom: 8px;
+        }
+        .record-complete-card input,
+        .record-complete-card select,
+        .record-complete-card textarea {
+            min-height: 48px;
+            border-radius: 12px;
+            border: 1.5px solid #E5E7EB;
+            background: #FFFFFF;
+            font-size: 14px;
+        }
+
+        .flacc-complete {
+            background: #FFF1F5;
+            border: 1.5px solid #FBCFE8;
+            border-radius: 18px;
+            padding: 20px 16px;
+            margin: 18px 0;
+        }
+        .flacc-complete h3 {
+            margin: 0 0 5px;
+            text-align: center;
+            color: #DB2777;
+            font-size: 18px;
+            font-weight: 900;
+        }
+        .flacc-complete .flacc-sub {
+            text-align: center;
+            color: #9CA3AF;
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+        .flacc-face-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 6px;
+            margin-bottom: 14px;
+        }
+        .flacc-face-card {
+            border: 1.5px solid transparent;
+            background: #FFFFFF;
+            border-radius: 14px;
+            min-height: 101px;
+            padding: 10px 3px;
+            text-align: center;
+            font-weight: 800;
+            color: #B9BDC5;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .flacc-face-card.active {
+            border-color: #EC4899;
+            background: #FFF7FA;
+            color: #DB2777;
+            box-shadow: 0 8px 18px rgba(236,72,153,.13);
+        }
+        .flacc-face-card .emoji {
+            font-size: 25px;
+            line-height: 1;
+            margin-bottom: 7px;
+        }
+        .flacc-face-card .range {
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        .flacc-face-card .txt {
+            font-size: 11px;
+            line-height: 1.25;
+        }
+        .flacc-gradient {
+            height: 6px;
+            border-radius: 99px;
+            background: linear-gradient(90deg,#22C55E 0%,#AAD84A 32%,#F59E0B 55%,#F97316 72%,#B91C1C 100%);
+            margin: 2px 0 7px;
+        }
+        .flacc-label-row {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            font-size: 11px;
+            margin-bottom: 13px;
+        }
+        .flacc-label-row span:nth-child(1){ color:#9CA3AF; text-align:left; }
+        .flacc-label-row span:nth-child(2){ color:#F59E0B; text-align:center; }
+        .flacc-label-row span:nth-child(3){ color:#DC2626; text-align:right; }
+        .flacc-score-row {
+            display: grid;
+            grid-template-columns: repeat(11, 1fr);
+            gap: 5px;
+            margin-bottom: 13px;
+        }
+        .flacc-score-btn {
+            height: 40px;
+            border-radius: 9px;
+            border: 1px solid #E5E7EB;
+            background: #FFFFFF;
+            color: #8B95A1;
+            font-size: 14px;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .flacc-score-btn.active {
+            color: #FFFFFF;
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(0,0,0,.17);
+        }
+        .flacc-result-box {
+            border-radius: 14px;
+            padding: 15px 18px;
+            display: flex;
+            align-items: center;
+            gap: 17px;
+        }
+        .flacc-result-number {
+            min-width: 54px;
+            font-size: 42px;
+            line-height: 1;
+            font-weight: 950;
+            text-align: center;
+        }
+        .flacc-result-title {
+            font-size: 16px;
+            font-weight: 900;
+            margin-bottom: 5px;
+        }
+        .flacc-result-msg {
+            font-size: 12px;
+            color: #6B7280;
+            line-height: 1.35;
+        }
+
+        .real-calendar-complete {
+            border-radius: 22px;
+            padding: 22px 18px 24px;
+        }
+        .real-calendar-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+        }
+        .real-calendar-note {
+            font-size: 12px;
+            color: #9CA3AF;
+            text-align: right;
+            margin: -2px 0 10px;
+        }
+        .real-calendar-nav {
+            display: grid;
+            grid-template-columns: 40px 1fr 40px;
+            align-items: center;
+            margin: 8px 0 18px;
+        }
+        .real-calendar-month {
+            text-align: center;
+            font-size: 18px;
+            font-weight: 900;
+            color: #111827;
+        }
+        .real-calendar-arrow {
+            border: 0;
+            background: transparent;
+            color: #9CA3AF;
+            font-size: 24px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+        .real-calendar-weekdays,
+        .real-calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+        }
+        .real-calendar-weekdays div {
+            font-size: 12px;
+            color: #9CA3AF;
+            font-weight: 800;
+            padding: 10px 0 12px;
+        }
+        .real-calendar-day {
+            min-height: 56px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            font-size: 15px;
+            color: #111827;
+            font-weight: 500;
+        }
+        .real-calendar-day.muted {
+            color: #D1D5DB;
+        }
+        .real-calendar-day.today {
+            background: #F59E0B;
+            color: #FFFFFF;
+            font-weight: 900;
+        }
+        .real-calendar-day.has-log::after {
+            content: "";
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #22C55E;
+            position: absolute;
+            left: 50%;
+            bottom: 9px;
+            transform: translateX(-50%);
+        }
+        .real-calendar-day.today.has-log::after,
+        .real-calendar-day.today::after {
+            content: "";
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #FFFFFF;
+            position: absolute;
+            left: 50%;
+            bottom: 9px;
+            transform: translateX(-50%);
+        }
+        .history-record-extra {
+            font-weight: 800;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+
+        .app-btn {
+            position: relative;
+            z-index: 5;
+            touch-action: manipulation;
+            user-select: none;
+        }
+        .record-action-row {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .small-action-btn {
+            border: none;
+            border-radius: 8px;
+            padding: 7px 10px;
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+        .delete-log-btn {
+            background: #FEF2F2;
+            color: #DC2626;
+            border: 1px solid #FECACA;
+        }
+        .cancel-edit-btn {
+            display: none;
+            background: #6B7280 !important;
+            margin-top: 8px;
+        }
+
+
+        #history-box, #reset-all-btn, .delete-log-btn {
+            position: relative;
+            z-index: 50;
+            pointer-events: auto !important;
+            touch-action: manipulation;
+        }
+        #reset-all-btn {
+            margin-bottom: 90px !important;
+            min-height: 48px;
+        }
+        .delete-log-btn {
+            min-height: 34px;
+        }
+
     </style>
 </head>
-
 <body>
-    <div class="wrapper">
-        <!-- Profile Box -->
-        <div class="left_wrap">
-            <div class="box card box_radius">
-                <div class="contents_bg color_gradition"></div>
-                <div class="contents_image"></div>
-                <div class="contents_info">
-                    <span class="info_name">Sun Ye Dam</span>
-                    <span class="info_job">NURSE</span>
-                </div>
-                <div class="contents_local">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span class="info_local">Gwang-Ju, South Korea</span>
-                </div>
-                <div class="contents_connect">
-                    <a href="#">1127ydyd@naver.com</a>
-                </div>
-                <div class="contents_sns">
-                    <div class="middle">
-                        <a class="snsbtn" href="#" target="_blank">
-                           <i class="fa-brands fa-kakao-talk"></i>
-                        </a>
-                        <a class="snsbtn" href="#" target="_blank">
-                            <i class="fa-brands fa-google"></i>
-                        </a>
-                        <a class="snsbtn" href="https://blog.naver.com/dalmee077" target="_blank">
-                            <i class="fa-solid fa-at"></i>
-                        </a>
-                        <a class="snsbtn" href="#" target="_blank">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="design_bar"></div>
+
+<div id="app">
+    <header>
+        <div class="header-top">
+            <div class="header-title">
+                <h1 onclick="navigate('home')">우리 아이 건강 지킴이</h1>
             </div>
-
-
-            <div class="skill_box box_radius">
-                <div class="content_box box_radius">
-                    <div class="content_title color_main_border">
-                        <span>Skills</span>
-                    </div>
-                    <div class="content_inner education_inner">
-                        <div class="bar_wrap">
-                            <div class="skill_title">Nurse major knowledge</div>
-                            <div>
-                                <div class="bar_border">
-                                    <div class="bar_fill color_gradition" style="width: 93%">93%</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bar_wrap">
-                            <div class="skill_title">Cardiopulmonary Resuscitation</div>
-                            <div>
-                                <div class="bar_border">
-                                    <div class="bar_fill color_gradition" style="width: 100%">100%</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bar_wrap">
-                            <div class="skill_title">data literacy</div>
-                            <div>
-                                <div class="bar_border">
-                                    <div class="bar_fill color_gradition" style="width: 100%">100%</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="bar_wrap">
-                            <div class="skill_title">TOEIC</div>
-                            <div>
-                                <div class="bar_border">
-                                    <div class="bar_fill color_gradition" style="width: 93%">93%</div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
+            <div class="header-icon"><i class="fa-solid fa-heart-pulse" style="color: var(--emergency);"></i></div>
         </div>
-        <div class="wrap_card">
-            <div class="content_box box_radius">
-                <div class="content_title color_main_border">
-                    <!-- <span><i class="fa-solid fa-user-nurse"></i></span> -->
-                    <span>About Me</span>
-                </div>
-                <div class="content_inner">
-                    Hello, my name is Sun Ye Dam. I’m a nurse.
-I value empathy and clear communication, and I believe small acts of care can make a big difference for patients. I strive to create a calm and trusting environment, especially in stressful situations. I’m always willing to learn and grow, and I approach my work with responsibility and sincerity. I’m glad to meet you and look forward to working together.
+    </header>
+
+    <main id="main-content">
+        
+        <section id="page-home" class="page active">
+            <div class="card priority-banner">
+                <span class="priority-tag">필독 수칙</span>
+                <div class="card-title" style="color: var(--emergency);"><i class="fa-solid fa-triangle-exclamation" style="color:var(--emergency)"></i> 안전 최우선 활동 금지</div>
+                <div style="font-size: 13px; line-height: 1.6; font-weight: 400;">
+                    열이 내려도 간과 비장은 회복 중입니다.<br>
+                    <strong>3주간 뛰기, 점프, 자전거는 절대 금지!!</strong>
                 </div>
             </div>
 
-            <div class="content_box box_radius">
-                <div class="content_title color_main_border">
-                    <!-- <span><i class="fa-solid fa-user-graduate"></i></span> -->
-                    <span>Education</span>
+            <div class="card">
+                <div class="card-title"><i class="fa-solid fa-file-medical"></i> 우리 아이 현재 상태</div>
+                <div style="font-size: 13px; line-height: 1.8;">
+                    🩺 <strong>진단명:</strong> 전염성 단핵구증 (EBV 감염)<br>
+                    🩺 <strong>합병증:</strong> 간비장비대
                 </div>
-                <div class="content_inner education_inner">
-                    <!-- 고등학교 -->
-                    <div class="education_box box_radius">
-                        <div class="content_info_box">
-                            <span class="info_bold">능주고등학교</span>
-                            <span class="color_main">2019 ~ 2022 (졸업)</span>
-                        </div>
-                        <div class="content_info_box">
-                            <span> </span>
-                            <span> </span>
-                        </div>
-                    </div>
-
-                    <!-- 대학교 -->
-                    <div class="education_box box_radius">
-                        <div class="content_info_box">
-                            <span class="info_bold">전남대학교 간호대학</span>
-                            <span class="color_main">2022 ~ 2027 (졸업예정)</span>
-                        </div>
-                        <div class="content_info_box box_2">
-                            <span>간호학 학사 (BSN)</span>
-                            <span>학점: 3.98 / 4.5</span>
-                        </div>
-                    </div>
+                <div class="highlight-box">
+                    <strong>오늘의 핵심 미션:</strong> 복부에 충격이 가지 않도록 과격한 활동은 제한해 주세요!
                 </div>
             </div>
 
-            <div class="content_box box_radius">
-                <div class="content_title color_main_border">
-                    <!-- <span><i class="fa-solid fa-user-nurse"></i></span> -->
-                    <span>Experiences</span>
-                </div>
-                    <div class="content_inner education_inner">
-                        <div class="education_box box_radius">
-                            <div class="content_info_box">
-                                <span class="info_bold">전남대병원 (간호실습생)</span>
-                                <span class="color_red">2025.10.00 ~ 12.00 (3M)</span>
-                            </div>
-                        </div>
 
-                        <div class="education_box box_radius">
-                            <div class="content_info_box">
-                                <span class="info_bold">00병원 00과(간호실습생)</span>
-                                <span class="color_red">2025.10.00 ~ 12.00 (3M)</span>
-                            </div>
-                        </div>
+            <div class="card">
+                <div class="card-title"><i class="fa-solid fa-film"></i> 앰버와 함께 알아보기</div>
+                <div style="font-size:13px; color:#6B7280; line-height:1.6; margin-bottom:12px;">
+                    왜 배가 빵빵했는지, 왜 뛰면 안 되는지 앰버와 함께 알아봐요!
                 </div>
+                <a href="https://drive.google.com/file/d/12F-jtJau0qRPAdaGLfho1C4uvWBxoJh-/view?usp=sharing" target="_blank" class="app-btn" style="display:block; text-align:center; text-decoration:none;">
+                    ▶ 교육 영상 보기
+                </a>
             </div>
 
-            <div class="content_box box_radius">
-                <div class="content_title color_main_border">
-                    <!-- <span><i class="fa-solid fa-user-nurse"></i></span> -->
-                    <span>Licenses</span>
-                </div>
-                <div class="content_inner education_inner">
-                    <div class="education_box box_radius">
-                        <div class="content_info_box">
-                            <span class="info_bold">간호사 면허</span>
-                            <span class="color_red">0000.00.00</span>
-                        </div>
-                        <div class="content_info_box box_2">
-                            <span>보건복지부(국가공인)</span>
-                        </div>
-                    </div>
-                    
-                    <div class="education_box box_radius">
-                        <div class="content_info_box">
-                            <span class="info_bold">BLS Provider</span>
-                            <span class="color_red">2025.12.16</span>
-                        </div>
-                        <div class="content_info_box box_2">
-                            <span>대한심폐소생술학회(국제)</span>
-                        </div>
-                    </div>
+            <div class="quick-grid">
+                <div class="grid-item" onclick="navigate('disease')"><div class="grid-icon">🧬</div><span>질환 안내</span></div>
+                <div class="grid-item" onclick="navigate('lab')"><div class="grid-icon">🧪</div><span>검사 결과</span></div>
+                <div class="grid-item" onclick="navigate('care')"><div class="grid-icon">🏡</div><span>퇴원 관리</span></div>
+                <div class="grid-item" onclick="navigate('activity')"><div class="grid-icon">🏃</div><span>활동 가이드</span></div>
+                <div class="grid-item" onclick="navigate('check')"><div class="grid-icon">✅</div><span>회복 체크</span></div>
+                <div class="grid-item" onclick="navigate('emergency')"><div class="grid-icon">🚨</div><span>응급 상황</span></div>
+                <div class="grid-item" onclick="navigate('faq')"><div class="grid-icon">❓</div><span>FAQ</span></div>
+                <div class="grid-item" onclick="navigate('record')"><div class="grid-icon">📝</div><span>회복기록</span></div>
+            </div>
+        </section>
+
+        <section id="page-disease" class="page">
+            <div class="card">
+                <div class="card-title"><i class="fa-solid fa-circle-info"></i> 전염성 단핵구증이란?</div>
+                <div style="font-size: 13px; line-height: 1.6; color: #4B5563;">
+                    EBV(엡스타인-바 바이러스) 급성 감염성 질환입니다. 감기 증상과 함께 인후통, 피로감이 오며, 면역계가 반응하면서 간과 비장이 일시적으로 부어오를 수 있습니다.
                 </div>
             </div>
-
-            <div class="content_box box_radius">
-                <div class="content_title color_main_border">
-                    <!-- <span><i class="fa-solid fa-user-nurse"></i></span> -->
-                    <span>Awards</span>
-                </div>
-                <div class="content_inner education_inner">
-                    <div class="education_box box_radius">
-                        <div class="content_info_box">
-                            <span class="info_bold">Remote Internship DXthon(최우수상)</span>
-                            <span class="color_red">2025.12.2</span>
-                        </div>
-                        <div class="content_info_box box_2">
-                            <span>한국지능정보사회진흥원</span>
-                        </div>
-                    </div>
+            <div class="card">
+                <div class="card-title"><i class="fa-solid fa-child-abdominal"></i> 왜 배가 빵빵하고 만져질까요?</div>
+                <div style="font-size: 13px; line-height: 1.6; color: #4B5563;">
+                    바이러스 세포를 파괴하는 과정에서 면역 장기인 간과 비장이 커졌기 때문입니다. 배가 볼록해질 수 있으나 회복 과정에서 자연스럽게 제 크기로 줄어듭니다.
                 </div>
             </div>
+            <div class="card">
+                <div class="card-title"><i class="fa-solid fa-clock"></i> 증상별 회복 타임라인</div>
+                <div style="font-size: 13px; line-height: 1.8;">
+                    • <strong>발열/인후통:</strong> 7~10일 내 호전<br>
+                    • <strong>식욕저하/복부불편:</strong> 수 주 이내 점차 호전<br>
+                    • <strong>만성 피로감:</strong> 2~4주 이상 (수개월 지속 가능)<br>
+                    • <strong>간·비장 크기:</strong> 수주~수개월 (외래 검사 필수)
+                </div>
+                <div class="highlight-box">
+                    ⚠️ <strong>중요:</strong> 소아는 회복이 빠르지만, 겉보기에 건강해 보여도 내부 비장은 여전히 커진 상태일 수 있어 방심은 금물입니다.
+                </div>
+            </div>
+            <div class="card" style="border:1.5px solid var(--primary);">
+                <div class="card-title"><i class="fa-solid fa-film"></i> 아이와 함께 보는 교육 영상</div>
+                <div style="font-size:13px; color:#6B7280; line-height:1.6; margin-bottom:12px;">
+                </div>
+                <a href="https://drive.google.com/file/d/12F-jtJau0qRPAdaGLfho1C4uvWBxoJh-/view?usp=sharing" target="_blank" class="app-btn" style="display:block; text-align:center; text-decoration:none;">
+                    ▶ 영상 보기
+                </a>
+            </div>
 
-        </div>
+
+        </section>
+
+        
+<section id="page-lab" class="page">
+    <div class="card">
+        <div class="card-title">🧪 EBV 양성 (Positive)</div>
+        <div style="background:#F0FDF4; color:#166534; padding:8px 12px; border-radius:10px; font-size:12px; font-weight:600; margin-bottom:10px;">🟢 정상 기준: 음성 (Negative)</div>
+        <p style="font-size:13px; margin:0; line-height:1.6; color:#4B5563;">EBV 바이러스가 검출된 상태로 현재 몸속에서 감염을 앓고 있거나 매우 최근에 감염되었음을 확인하는 지표입니다.</p>
     </div>
-</body>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script type="text/javascript">
-    $(document).on('click', '.tab_btn_box > input', function () {
-        if ($(this).is(':checked')) {
-            $('.tab_box').css('display', 'none');
-            const id = $(this).attr('id');
-            const num = id.substring(3, 5);
-            const selector = ".box" + num;
-            $(selector).css('display', 'block');
+    <div class="card">
+        <div class="card-title">🧪 비정형 림프구 증가</div>
+        <div style="background:#F0FDF4; color:#166534; padding:8px 12px; border-radius:10px; font-size:12px; font-weight:600; margin-bottom:10px;">🟢 정상 기준: 0~2%</div>
+        <p style="font-size:13px; margin:0; line-height:1.6; color:#4B5563;">바이러스에 대항하기 위해 활성화된 백혈구입니다. 몸이 열심히 싸우고 있다는 면역 시스템 반응입니다.</p>
+    </div>
+
+    <div class="card">
+        <div class="card-title">🧪 AST / ALT 수치 상승</div>
+        <div style="background:#F0FDF4; color:#166534; padding:8px 12px; border-radius:10px; font-size:12px; font-weight:600; margin-bottom:10px;">🟢 정상 기준: AST, ALT 40 U/L 이하</div>
+        <p style="font-size:13px; margin:0; line-height:1.6; color:#4B5563;">간세포의 염증 정도를 뜻합니다. 감염 기간 일시적으로 상승할 수 있으나 충분히 쉬면 점차 정상 범위로 회복되며 외래 추적 혈액검사로 확인할 수 있습니다.</p>
+    </div>
+
+    <div class="card">
+        <div class="card-title">🧪 간비장비대 확인</div>
+        <div style="background:#F0FDF4; color:#166534; padding:8px 12px; border-radius:10px; font-size:12px; font-weight:600; margin-bottom:10px;">🟢 정상 기준: 간·비장 비대 없음</div>
+        <p style="font-size:13px; margin:0; line-height:1.6; color:#4B5563;">검사 및 진찰 결과 간과 비장이 커져 있는 것이 확인되었습니다. 회복되면서 정상 크기로 돌아오지만, 회복되기 전까지는 뛰기·점프·충격이 있는 활동을 피해야 합니다.</p>
+    </div>
+</section>
+
+
+        <section id="page-care" class="page">
+            <div class="card">
+                <div class="card-title"><i class="fa-solid fa-house-user"></i> 일상 생활 돌봄</div>
+                <div style="font-size: 13px; line-height: 1.7; color: #4B5563;">
+                    • <strong>절대 휴식:</strong> 무리한 외출 및 장시간 야외 활동을 피하고 충분한 휴식을 취하세요.<br>
+                    • <strong>수분 공급:</strong> 탈수 및 인후통 경감을 위해 미지근한 물을 수시로 복용해 주세요.<br>
+                    • <strong>체온 측정:</strong> 매일 정해진 시간에 최소 오전/오후 2회 측정하여 기록해 주세요.
+                </div>
+            </div>
+
+            <div class="card" style="border: 1.5px solid var(--primary-dark);">
+                <div class="card-title" style="color: var(--primary-dark);">
+                    <i class="fa-solid fa-syringe"></i> IVIG 치료 후 예방접종 안내
+                </div>
+
+                <div style="font-size: 13px; line-height: 1.7; color: #4B5563;">
+                    우리 아이는 <strong>2026년 5월 30일 IVIG 치료</strong>를 받았습니다.<br><br>
+                    IVIG에는 많은 항체가 포함되어 있어 일정 기간 동안 일부 백신의 면역반응(항체 생성)에 영향을 줄 수 있습니다.
+                </div>
+
+                <div style="background:#FEF2F2; padding:12px; border-radius:10px; font-size:12px; line-height:1.7; margin-top:12px;">
+                    <strong style="color:var(--emergency);">⚠️ 생백신 접종은 연기가 필요해요</strong><br><br>
+                    다음 백신은 IVIG의 영향을 받을 수 있어 일반적으로 <strong>IVIG 치료 후 약 11개월 뒤 접종</strong>을 권장합니다.<br><br>
+                    • MMR(홍역·볼거리·풍진)<br>
+                    • 수두<br>
+                    • 일본뇌염 생백신
+                </div>
+
+                <div class="highlight-box" style="margin-top:10px;">
+                    <strong>💡 왜 연기하나요?</strong><br>
+                    백신이 위험해서가 아닙니다. IVIG로 인해 체내에 항체가 남아 있어 백신을 접종하더라도 충분한 면역이 형성되지 않을 수 있기 때문입니다.
+                </div>
+
+                <div class="highlight-box" style="margin-top:10px;">
+                    <strong>📌 꼭 기억해 주세요</strong><br>
+                    예방접종 일정은 아동 상태와 접종 종류에 따라 달라질 수 있으므로 외래 방문 시 소아청소년과 의료진과 반드시 상담하세요.
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title"><i class="fa-solid fa-utensils"></i> 식사 및 위생 수칙</div>
+                <div style="font-size: 13px; line-height: 1.6; color:#4B5563;">
+                    • <strong>권장:</strong> 흰죽, 맑은국, 두부, 바나나, 삶은 감자 등 소화가 쉬운 음식<br>
+                    • <strong>제한:</strong> 기름진 튀김, 자극적인 인스턴트식품<br>
+                    • <strong>전염차단:</strong> 침으로 옮으므로 가족 간에도 수저, 칫솔, 물컵은 철저히 따로 사용하세요!
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-title"><i class="fa-solid fa-school"></i> 등원 및 단체생활</div>
+                <div style="font-size: 13px; color: #4B5563; line-height: 1.6;">
+                    어린이집/유치원에 가더라도 뛰어놀기, 점프, 친구들과 엉겨 붙는 활동은 제한해야 해요. 담임 선생님께 해당 가이드를 명확히 전달해 주세요.
+                </div>
+            </div>
+        </section>
+
+        <section id="page-activity" class="page">
+            <div class="card">
+                <div class="card-title" style="color: var(--emergency);"><i class="fa-solid fa-shield-heart"></i> 비장 손상 예방이 왜 중요할까요?</div>
+                <div style="font-size: 13px; line-height: 1.6; color: #4B5563;">
+                    커져 있는 비장은 매우 얇고 약해진 상태입니다. <strong>아주 가벼운 부딪힘이나 툭 치는 충격만으로도 내부에서 찢어지는 비장 파열</strong>이 발생할 수 있어 물리적인 방어가 필수입니다.
+                </div>
+            </div>
+
+            <div class="status-card sc-red">
+                <div style="font-size:24px;">🔴</div>
+                <div>
+                    <strong style="font-size:14px;">발병 후 3주(21일)까지: 절대 제한</strong>
+                    <div style="margin-top:4px; font-size:12px; opacity:0.9;">뛰기, 거실 소파/침대 점프, 자전거, 킥보드, 트램펄린, 축구, 농구, 태권도 등 충격 유발 전면 금지</div>
+                </div>
+            </div>
+
+            <div class="status-box status-yellow" style="margin-bottom:10px;">
+                <div style="font-size:24px;">🟡</div>
+                <div>
+                    <strong style="font-size:14px;">발병 후 3주 이후: 점진적 완화</strong>
+                    <div style="margin-top:4px; font-size:12px; opacity:0.9;">급성 증상이 없고 의료진의 판단하에 가벼운 동네 산책, 정적인 비접촉성 놀이만 제한적 허용</div>
+                </div>
+            </div>
+
+            <div class="status-box status-green" style="margin-bottom:14px;">
+                <div style="font-size:24px;">🟢</div>
+                <div>
+                    <strong style="font-size:14px;">발병 후 4~6주 이후: 정상 회복</strong>
+                    <div style="margin-top:4px; font-size:12px; opacity:0.9;">외래 추적 초음파 및 진찰을 통해 비장의 완전한 회복이 확인된 후 일반적인 운동 기능 재개 가능</div>
+                </div>
+            </div>
+
+            <div class="card" style="background:#FFF5F5; border:1px solid #FEB2B2;">
+                <div style="font-size:13px; font-weight:700; color:var(--emergency);"><i class="fa-solid fa-eye"></i> 보호자가 흔히 놓치는 일상 위험 행동</div>
+                <div style="font-size:12px; line-height: 1.8; color:#9B1C1C; margin-top:6px;">
+                    • 침대나 소파 위에서 형제들과 신나서 방방 뛸 때<br>
+                    • 장난으로 아빠 어깨에 무리하게 매달리거나 비행기 태워줄 때<br>
+                    • 놀이터에서 다른 아이들과 부딪히며 거칠게 술래잡기할 때
+                </div>
+            </div>
+        </section>
+
+        <section id="page-check" class="page">
+            <div class="card">
+                <div class="card-title"><i class="fa-solid fa-clipboard-check"></i> 오늘 상태 기반 안전 자가진단</div>
+                <div class="check-row"><input type="checkbox" class="rec-check"> <span>해열제를 먹지 않고 열이 전혀 나지 않는다.</span></div>
+                <div class="check-row"><input type="checkbox" class="rec-check"> <span>아이가 배 통증이나 불편감을 호소하지 않는다.</span></div>
+                <div class="check-row"><input type="checkbox" class="rec-check"> <span>평소 수준으로 식사나 죽을 잘 삼킨다.</span></div>
+                <div class="check-row"><input type="checkbox" class="rec-check"> <span>탈수 징후가 없고 물을 자주 섭취한다.</span></div>
+                <div class="check-row"><input type="checkbox" class="rec-check"> <span>축 처지지 않고 컨디션이 활발해 보인다.</span></div>
+                
+                <button class="app-btn" style="margin-top: 18px;" onclick="checkResult()">앱 진단 알고리즘 결과 확인</button>
+                <div id="check-result" style="display:none; margin-top:15px; padding:15px; border-radius:12px; text-align:center; font-weight:700; font-size:14px;"></div>
+            </div>
+        </section>
+
+        <section id="page-emergency" class="page">
+            <div class="emergency-banner">
+                <div style="font-size: 16px; font-weight: 700; margin-bottom: 6px;"><i class="fa-solid fa-truck-medical"></i> [초응급] 즉시 대형병원 응급실로 이송하세요!</div>
+                <div style="font-size: 13px; line-height: 1.7; opacity:0.95;">
+                    • 갑작스럽고 자지러지는 듯한 극심한 복통 발생<br>
+                    • <strong>왼쪽 윗배</strong> 또는 <strong>왼쪽 어깨 부위</strong>의 강한 방사통<br>
+                    • 아이가 사색이 되며 창백해지고, 식은땀을 흘림<br>
+                    • 어지러움증 호소, 실신(기절), 혹은 심하게 축 처짐
+                </div>
+                <div style="font-size:11px; margin-top:8px; background:rgba(0,0,0,0.2); padding:8px; border-radius:6px;">
+                    ※ 치명적인 내부 출혈을 유발하는 <strong>비장 파열</strong>의 절대적인 응급 징후입니다.
+                </div>
+            </div>
+
+            <div class="card" style="border: 1.5px solid var(--primary-dark);">
+                <div class="card-title" style="color: var(--primary-dark);"><i class="fa-solid fa-phone-volume"></i> 다음의 경우 주치의 또는 외래 문의</div>
+                <div style="font-size: 13px; line-height: 1.7; color: #4B5563;">
+                    • 퇴원 후 잡혔던 열이 다시 나거나 고열이 지속될 때<br>
+                    • 헛구역질을 하며 반복적으로 음식을 구토하고 거부할 때<br>
+                    • 배가 육안으로 봐도 평소보다 훨씬 팽팽하고 빵빵해질 때<br>
+                    • 아이가 일상생활을 전혀 하지 못할 정도로 깊은 피로감을 느낄 때
+                </div>
+            </div>
+        </section>
+
+                <section id="page-faq" class="page">
+            <div class="card">
+                <div class="card-title"><i class="fa-solid fa-circle-question"></i> 자주 묻는 질문 해결 센터</div>
+                
+                <div class="acc-item">
+                    <div class="acc-trigger" onclick="toggleFaq(this)">Q. 언제부터 다시 뛰어놀 수 있나요? <i class="fa-solid fa-chevron-down"></i></div>
+                    <div class="acc-panel">비장이 커져 있는 동안에는 충격에 의해 비장 파열 위험이 있습니다. 일반적으로 발병 후 최소 3주 동안은 뛰기, 점프, 자전거, 킥보드, 축구, 태권도 등의 활동을 피해야 합니다. 이후에도 반드시 외래 진료에서 의료진의 확인 후 활동을 점차 늘려주세요.</div>
+                </div>
+                <div class="acc-item">
+                    <div class="acc-trigger" onclick="toggleFaq(this)">Q. 목욕이나 수영은 해도 되나요? <i class="fa-solid fa-chevron-down"></i></div>
+                    <div class="acc-panel">집에서 가볍게 샤워하거나 목욕하는 것은 가능합니다. 다만 몸 상태가 좋지 않거나 어지러움이 있다면 보호자와 함께 해주세요. 수영장은 체력 소모가 크고 다른 아이들과 부딪힐 수 있어 의료진이 허락할 때까지 미루는 것이 좋습니다.</div>
+                </div>
+                <div class="acc-item">
+                    <div class="acc-trigger" onclick="toggleFaq(this)">Q. 예방접종은 어떻게 하나요? <i class="fa-solid fa-chevron-down"></i></div>
+                    <div class="acc-panel">우리 아이는 IVIG 치료를 받았기 때문에 일부 생백신(MMR, 수두, 일본뇌염 생백신)은 일정 기간 접종을 연기해야 할 수 있습니다. 일반적으로 IVIG 치료 후 약 11개월 뒤 접종을 권장하지만, 정확한 일정은 외래 진료 시 의료진과 반드시 상담해 주세요.</div>
+                </div>
+                <div class="acc-item">
+                    <div class="acc-trigger" onclick="toggleFaq(this)">Q. 형제자매에게도 옮을 수 있나요? <i class="fa-solid fa-chevron-down"></i></div>
+                    <div class="acc-panel">EBV는 주로 침(타액)을 통해 전파됩니다. 함께 사용하는 컵, 빨대, 숟가락, 칫솔은 따로 사용해 주세요. 손 씻기와 기침 예절을 잘 지키면 전파 위험을 줄일 수 있습니다.</div>
+                </div>
+                <div class="acc-item">
+                    <div class="acc-trigger" onclick="toggleFaq(this)">Q. 열이 다시 나면 어떻게 해야 하나요? <i class="fa-solid fa-chevron-down"></i></div>
+                    <div class="acc-panel">퇴원 후에도 일시적으로 미열이 있을 수 있습니다. 하지만 38℃ 이상의 열이 반복되거나, 열과 함께 복통이 심해지거나 아이가 축 처진다면 병원에 연락하거나 진료를 받아야 합니다.</div>
+                </div>
+                <div class="acc-item">
+                    <div class="acc-trigger" onclick="toggleFaq(this)">Q. 음식은 무엇을 조심해야 하나요? <i class="fa-solid fa-chevron-down"></i></div>
+                    <div class="acc-panel">간이 회복되는 동안에는 기름진 음식, 튀김류, 매우 자극적인 음식은 줄이는 것이 좋습니다. 죽, 국, 과일, 두부 등 소화가 쉬운 음식을 충분한 수분과 함께 섭취하도록 도와주세요. 억지로 먹이기보다는 조금씩 자주 먹는 것이 좋습니다.</div>
+                </div>
+                <div class="acc-item">
+                    <div class="acc-trigger" onclick="toggleFaq(this)">Q. 입원 초기와 퇴원 때 왜 진단명이 바뀌었나요? <i class="fa-solid fa-chevron-down"></i></div>
+                    <div class="acc-panel"> 초기부터 5일 이상 지속되는 발열과 경부 림프절 비대, 백혈구 증가 소견을 보였습니다. 이러한 증상들은 가와사키병에서도 흔하게 나타나는 증상이며, 특히 소아에서 원인 불명의 발열이 지속될 경우 가와사키병을 우선적으로 고려하는 경우가 많습니다.
+그러나 이후 추가 검사에서 비정형 림프구 증가, EBV 항체 양성, 간비장비대, 간수치 상승이 확인되었고, 이는 감염성 단핵구증의 특징적인 소견이므로 최종적으로 감염성 단핵구증 및 간염으로 진단이 변경되었습니다</div>
+                </div>
+                <div class="acc-item">
+                    <div class="acc-trigger" onclick="toggleFaq(this)">Q. 아이 배를 만지면 덩어리 같은 게 느껴집니다. <i class="fa-solid fa-chevron-down"></i></div>
+                    <div class="acc-panel">바이러스 감염 여파로 일시적으로 커진 간과 비장의 모서리가 갈비뼈 아래로 만져지는 것일 수 있습니다. 정상적인 회복 과정을 거치면 쏙 들어가므로 억지로 강하게 누르지 마세요.</div>
+                </div>
+                <div class="acc-item">
+                    <div class="acc-trigger" onclick="toggleFaq(this)">Q. 퇴원 후에도 계속 누워있고 피곤해해요. <i class="fa-solid fa-chevron-down"></i></div>
+                    <div class="acc-panel">전염성 단핵구증의 대표적인 특징이 전신 피로감입니다. 급성 증상이 호전되어도 무기력함이나 피로감이 수 주에서 수개월까지 가기도 합니다. 억지로 깨우거나 활동시키지 말고 푹 쉬게 두시는 것이 안전합니다.</div>
+                </div>
+            </div>
+        </section>
+        <section id="page-record" class="page">
+            <div class="card record-complete-card">
+                <div class="card-title">📋 오늘의 일일 건강 로그 작성</div>
+                <form id="health-form">
+                    <div class="record-complete-grid">
+                        <div class="form-box">
+                            <label>🌡️ 체온 (°C)</label>
+                            <input type="number" step="0.1" id="in-temp" placeholder="예: 36.6">
+                        </div>
+                        <div class="form-box">
+                            <label>📏 복부 둘레 (cm)</label>
+                            <input type="number" step="0.1" id="in-abdomen" placeholder="예: 48.0">
+                        </div>
+                    </div>
+
+                    <div class="form-box">
+                        <label>종합 상태 모니터링</label>
+                        <select id="in-status">
+                            <option value="양호">🟢 양호</option>
+                            <option value="관찰">🟡 주의</option>
+                            <option value="주의">🔴 악화</option>
+                        </select>
+                    </div>
+
+                    <div class="flacc-complete">
+                        <h3>아픈 정도를 골라주세요! FLACC</h3>
+                        <div class="flacc-sub">숫자를 눌러 아이의 통증 정도를 기록해 주세요</div>
+
+                        <div class="flacc-face-row">
+                            <button type="button" class="flacc-face-card active" data-face-group="0" onclick="setFlaccPain(0)">
+                                <div class="emoji">😊</div><div class="range">0</div><div class="txt">아프지<br>않아요</div>
+                            </button>
+                            <button type="button" class="flacc-face-card" data-face-group="1" onclick="setFlaccPain(1)">
+                                <div class="emoji">🥺</div><div class="range">1~3</div><div class="txt">조금<br>아파요</div>
+                            </button>
+                            <button type="button" class="flacc-face-card" data-face-group="4" onclick="setFlaccPain(4)">
+                                <div class="emoji">😣</div><div class="range">4~6</div><div class="txt">꽤<br>아파요</div>
+                            </button>
+                            <button type="button" class="flacc-face-card" data-face-group="7" onclick="setFlaccPain(7)">
+                                <div class="emoji">😭</div><div class="range">7~9</div><div class="txt">많이<br>아파요</div>
+                            </button>
+                            <button type="button" class="flacc-face-card" data-face-group="10" onclick="setFlaccPain(10)">
+                                <div class="emoji">🤯</div><div class="range">10</div><div class="txt">너무<br>아파요</div>
+                            </button>
+                        </div>
+
+                        <div class="flacc-gradient"></div>
+                        <div class="flacc-label-row">
+                            <span>약한 통증 (0~3점)</span>
+                            <span>보통 통증 (4~6점)</span>
+                            <span>심한 통증 (7~10점)</span>
+                        </div>
+
+                        <div class="flacc-score-row" id="flacc-score-row">
+                            <button type="button" class="flacc-score-btn" onclick="setFlaccPain(0)">0</button>
+                            <button type="button" class="flacc-score-btn" onclick="setFlaccPain(1)">1</button>
+                            <button type="button" class="flacc-score-btn" onclick="setFlaccPain(2)">2</button>
+                            <button type="button" class="flacc-score-btn" onclick="setFlaccPain(3)">3</button>
+                            <button type="button" class="flacc-score-btn" onclick="setFlaccPain(4)">4</button>
+                            <button type="button" class="flacc-score-btn" onclick="setFlaccPain(5)">5</button>
+                            <button type="button" class="flacc-score-btn" onclick="setFlaccPain(6)">6</button>
+                            <button type="button" class="flacc-score-btn" onclick="setFlaccPain(7)">7</button>
+                            <button type="button" class="flacc-score-btn" onclick="setFlaccPain(8)">8</button>
+                            <button type="button" class="flacc-score-btn" onclick="setFlaccPain(9)">9</button>
+                            <button type="button" class="flacc-score-btn" onclick="setFlaccPain(10)">10</button>
+                        </div>
+
+                        <div class="flacc-result-box" id="flacc-result-box">
+                            <div class="flacc-result-number" id="flacc-result-number">0</div>
+                            <div>
+                                <div class="flacc-result-title" id="flacc-result-title">통증 없음</div>
+                                <div class="flacc-result-msg" id="flacc-result-msg">아이가 편안한 상태예요 😊</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-box">
+                        <label>오늘의 한 줄 기록장 / 외래 때 질문할 메모</label>
+                        <textarea id="in-memo" placeholder="예: 오늘 죽 반 그릇 비움. 복통 호소 없음. 외래 때 어린이집 등원 시점 질문할 것." rows="3"></textarea>
+                    </div>
+                    <button type="button" class="app-btn" id="save-log-btn" onclick="addHealthLog()">모바일 기기에 기록 저장</button>
+                    
+                </form>
+            </div>
+
+            <div class="card real-calendar-complete">
+                <div class="real-calendar-head">
+                    <div class="card-title" style="margin-bottom:0;">🗓️ 회복 관리 달력 상태판</div>
+                </div>
+                <div class="real-calendar-note">기록 시 하단에 유기적 점 표시</div>
+                <div class="real-calendar-nav">
+                    <button type="button" class="real-calendar-arrow" onclick="changeCalendarMonth(-1)">‹</button>
+                    <div class="real-calendar-month" id="real-calendar-month"></div>
+                    <button type="button" class="real-calendar-arrow" onclick="changeCalendarMonth(1)">›</button>
+                </div>
+                <div class="real-calendar-weekdays">
+                    <div>일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div>토</div>
+                </div>
+                <div class="real-calendar-days" id="real-calendar-days"></div>
+            </div>
+
+            <div id="history-box"></div>
+
+            <button type="button" class="app-btn" id="reset-all-btn" style="background:#EF4444; margin-top:10px; position:relative; z-index:50;">
+                🗑️ 모든 기록 초기화
+            </button>
+        </section>
+
+    </main>
+
+    <nav class="bottom-tabbar">
+        <button class="tab-btn active" onclick="navigate('home', this)"><i class="fa-solid fa-house"></i><span>홈</span></button>
+        <button class="tab-btn" onclick="navigate('disease', this)"><i class="fa-solid fa-virus-covid"></i><span>질환</span></button>
+        <button class="tab-btn" onclick="navigate('care', this)"><i class="fa-solid fa-hand-holding-heart"></i><span>돌봄</span></button>
+        <button class="tab-btn" onclick="navigate('emergency', this)"><i class="fa-solid fa-circle-exclamation"></i><span>응급대처</span></button>
+        <button class="tab-btn" onclick="navigate('record', this)"><i class="fa-solid fa-notes-medical"></i><span>기록/달력</span></button>
+    </nav>
+</div>
+
+<script>
+    // 탭 메뉴 간 부드러운 화면 전환 시스템
+    function navigate(pageId, btnElement) {
+        document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+        document.getElementById('page-' + pageId).classList.add('active');
+        
+        if(btnElement) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+        } else {
+            // 외부 아이콘 링크로 이동 시 매핑 처리
+            const matchingTab = document.querySelector(`.tab-btn i.${getTabIconMap(pageId)}`);
+            if(matchingTab) {
+                document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                matchingTab.parentElement.classList.add('active');
+            }
         }
-    });
+        // 페이지 상단으로 스크롤 자동 이동
+        document.getElementById('main-content').scrollTop = 0;
+    }
+
+    function getTabIconMap(id) {
+        const maps = { 'home':'fa-house', 'disease':'fa-virus-covid', 'care':'fa-hand-holding-heart', 'emergency':'fa-circle-exclamation', 'record':'fa-notes-medical' };
+        return maps[id] || '';
+    }
+
+    // FAQ 아코디언 컴포넌트 핸들러
+    function toggleFaq(headerElement) {
+        const panel = headerElement.nextElementSibling;
+        const arrow = headerElement.querySelector('i');
+        if (panel.style.maxHeight) {
+            panel.style.maxHeight = null;
+            arrow.style.transform = 'rotate(0deg)';
+        } else {
+            // 열려있는 다른 아코디언 닫기 자동화
+            document.querySelectorAll('.acc-panel').forEach(p => p.style.maxHeight = null);
+            document.querySelectorAll('.acc-trigger i').forEach(i => i.style.transform = 'rotate(0deg)');
+            
+            panel.style.maxHeight = panel.scrollHeight + "px";
+            arrow.style.transform = 'rotate(180deg)';
+        }
+    }
+
+    // 알고리즘 기반 상태 결과 분석
+    function checkResult() {
+        const checkboxes = document.querySelectorAll('.rec-check');
+        let selectedCount = 0;
+        checkboxes.forEach(box => { if(box.checked) selectedCount++; });
+        
+        const resBox = document.getElementById('check-result');
+        resBox.style.display = 'block';
+        
+        if(selectedCount === 5) {
+            resBox.style.background = '#F0FDF4'; resBox.style.color = '#166534';
+            resBox.innerHTML = '🟢 <strong>등원을 조심스럽게 고려할 수 있습니다.</strong><br><span style="font-size:11px; font-weight:400;">단, 어린이집 체육활동 및 야외 뛰기는 여전히 전면 차단되어야 합니다.</span>';
+        } else if(selectedCount >= 3) {
+            resBox.style.background = '#FFFBEB'; resBox.style.color = '#92400E';
+            resBox.innerHTML = '🟡 <strong>가정 내에서 조금 더 밀착 관찰이 필요합니다.</strong><br><span style="font-size:11px; font-weight:400;">컨디션이 들쑥날쑥할 수 있으므로 수면 시간을 더 확보해 주세요.</span>';
+        } else {
+            resBox.style.background = '#FEF2F2'; resBox.style.color = '#991B1B';
+            resBox.innerHTML = '🔴 <strong>가정 휴식을 강력히 권장합니다.</strong><br><span style="font-size:11px; font-weight:400;">장기 피로 및 증상 악화 우려가 크므로 외출을 삼가고 안정을 취하세요.</span>';
+        }
+    }
+
+
+    let currentFlaccScore = 0;
+    let calendarViewDate = new Date();
+
+    const flaccPainData = {
+        0:  { title:'통증 없음', msg:'아이가 편안한 상태예요 😊', bg:'#E7F7EA', color:'#15803D', group:0 },
+        1:  { title:'약한 통증', msg:'약간 불편함이 있어요', bg:'#F7FBEA', color:'#827A0E', group:1 },
+        2:  { title:'약한 통증', msg:'조금 아파하고 있어요', bg:'#F7FBEA', color:'#827A0E', group:1 },
+        3:  { title:'약한 통증', msg:'꽤 아파하고 있어요', bg:'#F7FBEA', color:'#827A0E', group:1 },
+        4:  { title:'보통 통증', msg:'많이 아파하고 있어요', bg:'#FFF3DF', color:'#EA580C', group:4 },
+        5:  { title:'보통 통증', msg:'아주 많이 불편해해요', bg:'#FFF3DF', color:'#EA580C', group:4 },
+        6:  { title:'보통 통증', msg:'굉장히 고통스러워해요', bg:'#FFF3DF', color:'#EA580C', group:4 },
+        7:  { title:'심한 통증', msg:'심하게 아파요 → 진통제 고려', bg:'#FDE7ED', color:'#B91C1C', group:7 },
+        8:  { title:'심한 통증', msg:'매우 심한 통증 → 진통제 필요', bg:'#FDE7ED', color:'#B91C1C', group:7 },
+        9:  { title:'심한 통증', msg:'극심한 통증 → 즉시 처치 필요', bg:'#FDE7ED', color:'#B91C1C', group:7 },
+        10: { title:'극심한 통증', msg:'참을 수 없는 통증 🚨 응급', bg:'#FDE7ED', color:'#B91C1C', group:10 }
+    };
+
+    function flaccScoreColor(score) {
+        if(score === 0) return '#34A853';
+        if(score <= 2) return '#63C16B';
+        if(score === 3) return '#CDE64B';
+        if(score <= 5) return '#F59E0B';
+        if(score === 6) return '#FF6B3A';
+        if(score <= 8) return '#EF4444';
+        return '#C50F1F';
+    }
+
+    function setFlaccPain(score) {
+        currentFlaccScore = score;
+        const info = flaccPainData[score];
+
+        document.querySelectorAll('.flacc-score-btn').forEach((btn, index) => {
+            btn.classList.remove('active');
+            btn.style.background = '#FFFFFF';
+            btn.style.color = '#8B95A1';
+            if(index === score) {
+                btn.classList.add('active');
+                btn.style.background = flaccScoreColor(score);
+                btn.style.color = '#FFFFFF';
+            }
+        });
+
+        document.querySelectorAll('.flacc-face-card').forEach(face => {
+            face.classList.toggle('active', Number(face.dataset.faceGroup) === info.group);
+        });
+
+        const box = document.getElementById('flacc-result-box');
+        const number = document.getElementById('flacc-result-number');
+        const title = document.getElementById('flacc-result-title');
+        const msg = document.getElementById('flacc-result-msg');
+
+        if(box && number && title && msg) {
+            box.style.background = info.bg;
+            number.textContent = score;
+            number.style.color = info.color;
+            title.textContent = info.title;
+            title.style.color = info.color;
+            msg.textContent = info.msg;
+        }
+    }
+
+    function dateKey(dateObj) {
+        return dateObj.getFullYear() + '-' +
+            String(dateObj.getMonth() + 1).padStart(2, '0') + '-' +
+            String(dateObj.getDate()).padStart(2, '0');
+    }
+
+    function renderCalendar() {
+        const monthEl = document.getElementById('real-calendar-month');
+        const daysEl = document.getElementById('real-calendar-days');
+        if(!monthEl || !daysEl) return;
+
+        const year = calendarViewDate.getFullYear();
+        const month = calendarViewDate.getMonth();
+        monthEl.textContent = `${year}년 ${month + 1}월`;
+        daysEl.innerHTML = '';
+
+        const firstDay = new Date(year, month, 1).getDay();
+        const lastDate = new Date(year, month + 1, 0).getDate();
+        const prevLastDate = new Date(year, month, 0).getDate();
+        const today = new Date();
+
+        const logs = JSON.parse(localStorage.getItem('ebv_pro_logs') || '[]');
+        const loggedDates = new Set(logs.map(log => log.fullDate).filter(Boolean));
+
+        for(let i = firstDay - 1; i >= 0; i--) {
+            const cell = document.createElement('div');
+            cell.className = 'real-calendar-day muted';
+            cell.textContent = prevLastDate - i;
+            daysEl.appendChild(cell);
+        }
+
+        for(let day = 1; day <= lastDate; day++) {
+            const cell = document.createElement('div');
+            const thisDate = new Date(year, month, day);
+            const key = dateKey(thisDate);
+
+            cell.className = 'real-calendar-day';
+            cell.textContent = day;
+
+            if(year === today.getFullYear() && month === today.getMonth() && day === today.getDate()) {
+                cell.classList.add('today');
+            }
+
+            if(loggedDates.has(key)) {
+                cell.classList.add('has-log');
+            }
+
+            daysEl.appendChild(cell);
+        }
+
+        const totalCells = firstDay + lastDate;
+        const nextCells = (Math.ceil(totalCells / 7) * 7) - totalCells;
+
+        for(let day = 1; day <= nextCells; day++) {
+            const cell = document.createElement('div');
+            cell.className = 'real-calendar-day muted';
+            cell.textContent = day;
+            daysEl.appendChild(cell);
+        }
+    }
+
+    function changeCalendarMonth(diff) {
+        calendarViewDate.setMonth(calendarViewDate.getMonth() + diff);
+        renderCalendar();
+    }
+
+    // 로컬 스토리지 기반의 스마트 건강 기록 기능
+    function addHealthLog() {
+        const tempVal = document.getElementById('in-temp').value.trim();
+        const abdomenVal = document.getElementById('in-abdomen').value.trim();
+        const statusVal = document.getElementById('in-status').value;
+        const memoVal = document.getElementById('in-memo').value.trim();
+        const now = new Date();
+        const currentDate = now.toLocaleDateString('ko-KR', {month: 'short', day: 'numeric'});
+        const currentTime = now.toLocaleTimeString('ko-KR', {hour: '2-digit', minute: '2-digit'});
+
+        // 체온, 복부둘레, 상태, 통증점수, 메모 중 하나라도 있으면 저장
+        const hasAnyInput =
+            tempVal !== '' ||
+            abdomenVal !== '' ||
+            memoVal !== '' ||
+            statusVal !== '' ||
+            currentFlaccScore !== 0;
+
+        if(!hasAnyInput) {
+            alert('체온, 복부둘레, 상태, 통증점수, 메모 중 하나라도 입력해 주세요.');
+            return;
+        }
+
+        const currentLog = {
+            fullDate: dateKey(now),
+            date: currentDate,
+            time: currentTime,
+            temp: tempVal,
+            abdomen: abdomenVal,
+            pain: currentFlaccScore,
+            status: statusVal,
+            memo: memoVal
+        };
+
+        let currentLogs = JSON.parse(localStorage.getItem('ebv_pro_logs') || '[]');
+        currentLogs.unshift(currentLog);
+        localStorage.setItem('ebv_pro_logs', JSON.stringify(currentLogs.slice(0, 20)));
+
+        alert('모바일 건강기록 로그 저장이 완료되었습니다.');
+
+        document.getElementById('health-form').reset();
+        setFlaccPain(0);
+        document.getElementById('save-log-btn').textContent = '모바일 기기에 기록 저장';
+
+        renderLogHistory();
+        renderCalendar();
+    }
+
+    function deleteHealthLog(index) {
+        let currentLogs = JSON.parse(localStorage.getItem('ebv_pro_logs') || '[]');
+        const idx = Number(index);
+
+        if(Number.isNaN(idx) || idx < 0 || idx >= currentLogs.length) return;
+
+        const ok = confirm('이 기록만 삭제할까요?');
+        if(!ok) return;
+
+        currentLogs.splice(idx, 1);
+        localStorage.setItem('ebv_pro_logs', JSON.stringify(currentLogs));
+
+        renderLogHistory();
+        renderCalendar();
+        alert('선택한 기록이 삭제되었습니다.');
+    }
+
+    // 저장 기록 렌더링 시스템
+    function renderLogHistory() {
+        const historyContainer = document.getElementById('history-box');
+        const storedLogs = JSON.parse(localStorage.getItem('ebv_pro_logs') || '[]');
+
+        if(storedLogs.length === 0) {
+            historyContainer.innerHTML = '';
+            return;
+        }
+
+        let htmlBuffer = '<div style="font-size:14px; font-weight:700; margin: 20px 0 10px; color:var(--text);"><i class="fa-solid fa-clock-history"></i> 축적된 최근 회복 일지</div>';
+
+        storedLogs.forEach((item, index) => {
+            let borderTheme = item.status === '양호' ? '#22C55E' : (item.status === '관찰' ? '#F59E0B' : '#EF4444');
+            let pain = item.pain ?? 0;
+            let abdomenText = item.abdomen ? ` · 복부둘레 ${item.abdomen}cm` : '';
+            htmlBuffer += `
+                <div class="card" style="padding:14px; font-size:12px; margin-bottom:8px; border-left:5px solid ${borderTheme}">
+                    <div style="display:flex; justify-content:space-between; font-weight:700; margin-bottom:6px;">
+                        <span>📅 ${item.date} ${item.time ? item.time : ''} 일지</span>
+                        <span style="color:${borderTheme}">🌡️ ${item.temp}°C [${item.status}]</span>
+                    </div>
+                    <div class="history-record-extra" style="color:${flaccScoreColor(Number(pain))};">FLACC ${pain}점${abdomenText}</div>
+                    <div style="color:#6B7280; line-height:1.5; word-break:break-all;">${item.memo ? item.memo : '작성된 특이사항 메모 없음'}</div>
+                    <div class="record-action-row">
+                        <button type="button" class="small-action-btn delete-log-btn" data-log-index="${index}">🗑️ 삭제</button>
+                    </div>
+                </div>
+            `;
+        });
+        historyContainer.innerHTML = htmlBuffer;
+    }
+
+    // 저장된 회복 기록 전체 초기화 기능
+    function resetLogs() {
+        const ok = confirm('저장된 회복기록을 모두 삭제할까요?');
+        if(!ok) return;
+
+        localStorage.removeItem('ebv_pro_logs');
+
+        const form = document.getElementById('health-form');
+        if(form) form.reset();
+
+        setFlaccPain(0);
+        calendarViewDate = new Date();
+
+        renderLogHistory();
+        renderCalendar();
+
+        alert('저장된 회복기록이 초기화되었습니다.');
+    }
+
+    // 앱 로드 시 초기화
+    window.onload = function() {
+        setFlaccPain(0);
+        renderLogHistory();
+        renderCalendar();
+
+        const resetBtn = document.getElementById('reset-all-btn');
+        if(resetBtn) {
+            resetBtn.onclick = function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                resetLogs();
+            };
+        }
+
+        document.addEventListener('click', function(e) {
+            const deleteBtn = e.target.closest('.delete-log-btn');
+            if(deleteBtn) {
+                e.preventDefault();
+                e.stopPropagation();
+                deleteHealthLog(deleteBtn.dataset.logIndex);
+            }
+        });
+    };
+
 </script>
 
-
+</body>
 </html>
-
-
-
-
-
